@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Python Learner Rony</title>
+  <style>
+    :root{
+      --accent:#0b63b6;
+      --muted:#556070;
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --radius:10px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:#0b1220}
+    header{background:var(--accent);color:white;padding:28px 16px;text-align:center}
+    header h1{margin:0;font-size:26px}
+    header p{margin:6px 0 0;font-size:14px;opacity:0.95}
+    .container{max-width:980px;margin:22px auto;padding:0 16px}
+    .hero{display:flex;flex-direction:column;gap:12px;align-items:flex-start;background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(11,18,32,0.06)}
+    .hero h2{margin:0;font-size:20px}
+    .hero p{margin:8px 0;color:var(--muted)}
+    .btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600;transition: background-color 0.3s ease;cursor:pointer;}
+    .btn:hover {
+      background-color: #094a8b;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 14px rgba(11,18,32,0.05);transition: transform 0.3s ease;}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(11,18,32,0.1);
+    }
+    .card h3{margin:0 0 8px;font-size:16px}
+    footer{margin-top:26px;padding:20px 16px;text-align:center;color:var(--muted);font-size:14px}
+    .small{font-size:13px;color:var(--muted)}
+    pre{background:#0b1220;color:#fff;padding:12px;border-radius:8px;overflow:auto}
+    /* responsive tweaks */
+    @media(min-width:720px){ .hero{flex-direction:row;justify-content:space-between;align-items:center} }
+
+    /* New section styles */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .python-details {
+      background: linear-gradient(135deg, #0b63b6 0%, #3a8dd5 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin: 28px 0;
+      box-shadow: 0 8px 24px rgba(11, 99, 182, 0.3);
+      animation: fadeInUp 1s ease forwards;
+    }
+    .python-details h2, .python-details h3 {
+      margin-top: 0;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .python-details p {
+      line-height: 1.5;
+      margin-bottom: 16px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .challenge-plan {
+      background: linear-gradient(135deg, #3a8dd5 0%, #0b63b6 100%);
+      padding: 18px 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(11, 99, 182, 0.4);
+      transition: background 0.4s ease;
+    }
+    .challenge-plan:hover {
+      background: linear-gradient(135deg, #0b63b6 0%, #3a8dd5 100%);
+    }
+    .reward-message {
+      margin-top: 16px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.4);
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    /* Unlock system styles */
+    .lesson-card {
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(11,18,32,0.05);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+      opacity: 1;
+      animation: fadeInUp 0.5s ease forwards;
+      min-height: 150px;
+      cursor: pointer;
+      position: relative;
+    }
+    .lesson-card.locked {
+      background: #e0e0e0;
+      color: #7a7a7a;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.7;
+    }
+    .lesson-card.completed {
+      background: #d4edda;
+      color: #155724;
+      box-shadow: 0 6px 18px rgba(21,87,36,0.3);
+    }
+    .lesson-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .lesson-content {
+      flex-grow: 1;
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: inherit;
+    }
+    .btn-complete {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
+      display: none;
+    }
+    .btn-complete:hover:not(:disabled) {
+      background-color: #094a8b;
+    }
+    .btn-complete:disabled {
+      background-color: #7a7a7a;
+      cursor: not-allowed;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 99, 182, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeInUp 0.3s ease forwards;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(11, 99, 182, 0.4);
+      position: relative;
+      padding: 24px 32px 32px 32px;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .modal pre {
+      background: #0b1220;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    .modal p {
+      line-height: 1.5;
+      margin-bottom: 16px;
+      color: #0b1220;
+    }
+    .modal ul {
+      margin-bottom: 16px;
+      padding-left: 20px;
+      color: #0b1220;
+    }
+    .modal button.close-modal {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+    .modal button.close-modal:hover {
+      color: #094a8b;
+    }
+    .modal .btn-complete {
+      display: inline-block;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Python Learner Rony</h1>
+    <p>Learn Python from basics to advanced — simple lessons by Rony</p>
+  </header>
+
+  <!-- New Python Programming Details and Challenge Section -->
+  <section class="container python-details" aria-label="Python programming details and 100 days challenge">
+    <h2>Deep Dive into Python Programming</h2>
+    <p>Python is a powerful, versatile, and beginner-friendly programming language widely used in web development, data science, automation, artificial intelligence, and more. Its simple syntax and vast ecosystem make it an excellent choice for learners and professionals alike.</p>
+    <p>Understanding Python thoroughly opens doors to numerous career opportunities and empowers you to solve real-world problems efficiently.</p>
+    
+    <section class="challenge-plan" aria-label="100 Days Python Challenge Plan">
+      <h3>100 Days Python Challenge</h3>
+      <p>Embark on a structured 100-day journey to master Python. Each day focuses on a specific concept, from basics like variables and loops to advanced topics such as decorators and web scraping.</p>
+      <ul>
+        <li>Day 1-10: Python Fundamentals (syntax, data types, control flow)</li>
+        <li>Day 11-30: Functions, Modules, and File Handling</li>
+        <li>Day 31-50: Object-Oriented Programming and Error Handling</li>
+        <li>Day 51-70: Working with Libraries (requests, pandas, matplotlib)</li>
+        <li>Day 71-90: Web Development Basics and APIs</li>
+        <li>Day 91-100: Projects and Deployment</li>
+      </ul>
+      <p>Consistency is key! Follow this challenge to build confidence and practical skills.</p>
+    </section>
+
+    <div class="reward-message" aria-live="polite">
+      🎉 Congratulations! Completing this challenge will unlock your potential as a skilled Python programmer. Keep coding and enjoy the journey!
+    </div>
+  </section>
+  <!-- End of New Python Programming Details and Challenge Section -->
+
+  <main class="container">
+    <section class="hero" aria-label="hero">
+      <div>
+        <h2>Welcome — first steps to become a Python coder</h2>
+        <p>Free lessons for 9th to +2 students. Hands-on examples, small projects, and friendly practice.</p>
+        <p style="margin-top:8px">
+          <a class="btn" href="#lessons">See Lesson Plan</a>
+        </p>
+      </div>
+      <div class="small">
+        <strong>Contact:</strong> ronynayak111@gmail.com<br/>
+        <span class="small">Want the site live? I can deploy it to GitHub Pages / Netlify for free.</span>
+      </div>
+    </section>
+
+    <section id="lessons" style="margin-top:18px">
+      <h2 style="margin:0 0 10px">Quick Course Overview</h2>
+      <div class="grid" id="lessonGrid">
+        <div class="lesson-card" data-day="1" aria-label="Day 1 lesson" tabindex="0">
+          <h3>Day 1 — Introduction, print, comments, variables, data types</h3>
+          <p class="lesson-content">print(), comments, variables, basic data types</p>
+        </div>
+        <div class="lesson-card locked" data-day="2" aria-label="Day 2 lesson" tabindex="0">
+          <h3>Day 2 — Input, type conversion, if/else</h3>
+          <p class="lesson-content">input(), type conversion, conditional statements</p>
+        </div>
+        <div class="lesson-card locked" data-day="3" aria-label="Day 3 lesson" tabindex="0">
+          <h3>Day 3 — Loops (for, while), range</h3>
+          <p class="lesson-content">for and while loops, range()</p>
+        </div>
+        <div class="lesson-card locked" data-day="4" aria-label="Day 4 lesson" tabindex="0">
+          <h3>Day 4 — Patterns and tables</h3>
+          <p class="lesson-content">Printing patterns and multiplication tables</p>
+        </div>
+        <div class="lesson-card locked" data-day="5" aria-label="Day 5 lesson" tabindex="0">
+          <h3>Day 5 — Functions (def), parameters, return</h3>
+          <p class="lesson-content">Defining functions, parameters, return values</p>
+        </div>
+        <div class="lesson-card locked" data-day="6" aria-label="Day 6 lesson" tabindex="0">
+          <h3>Day 6 — Lists and tuples</h3>
+          <p class="lesson-content">Working with lists and tuples</p>
+        </div>
+        <div class="lesson-card locked" data-day="7" aria-label="Day 7 lesson" tabindex="0">
+          <h3>Day 7 — Dictionaries and sets</h3>
+          <p class="lesson-content">Dictionaries and sets basics</p>
+        </div>
+        <div class="lesson-card locked" data-day="8" aria-label="Day 8 lesson" tabindex="0">
+          <h3>Day 8 — File handling (read/write)</h3>
+          <p class="lesson-content">Reading and writing files</p>
+        </div>
+        <div class="lesson-card locked" data-day="9" aria-label="Day 9 lesson" tabindex="0">
+          <h3>Day 9 — Modules and libraries</h3>
+          <p class="lesson-content">Using modules and libraries</p>
+        </div>
+        <div class="lesson-card locked" data-day="10" aria-label="Day 10 lesson" tabindex="0">
+          <h3>Day 10 — Mini Project (Calculator)</h3>
+          <p class="lesson-content">Build a simple calculator project</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2 style="margin:0 0 10px">Example — Small Python snippet</h2>
+      <div class="card">
+        <p class="small">This is for showing students how input and if-else work (explain this in class):</p>
+        <pre>name = input("Enter your name: ")
+marks = int(input("Enter your marks: "))
+if marks &gt;= 90:
+    print("Excellent,", name)
+elif marks &gt;= 60:
+    print("Good,", name)
+elif marks &gt;= 35:
+    print("Pass,", name)
+else:
+    print("Fail,", name)</pre>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <h2 style="margin:0 0 10px">Next steps (deployment)</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Option A — GitHub Pages</h3>
+          <p class="small">Free, works with static HTML. Good if you want a student-friendly learning site and control.</p>
+        </div>
+        <div class="card">
+          <h3>Option B — Netlify</h3>
+          <p class="small">Easy drag & drop deploy or connect to GitHub for auto updates. Free tier available.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Made with ♥ by Rony — <span class="small">Want changes? Tell me and I'll edit the site (colors, text, add pages).</span>
+    </footer>
+  </main>
+
+  <!-- Modals for each lesson day -->
+  <div id="modal-container">
+    <div class="modal-overlay" id="modal-overlay" aria-hidden="true" tabindex="-1">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="close-modal" aria-label="Close modal">&times;</button>
+        <h2 id="modal-title"></h2>
+        <div id="modal-content"></div>
+        <button class="btn-complete">Mark as Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const lessonCards = document.querySelectorAll('.lesson-card');
+      const modalOverlay = document.getElementById('modal-overlay');
+      const modalTitle = document.getElementById('modal-title');
+      const modalContent = document.getElementById('modal-content');
+      const btnComplete = modalOverlay.querySelector('.btn-complete');
+      const btnClose = modalOverlay.querySelector('.close-modal');
+
+      // Lesson details data
+      const lessons = {
+        1: {
+          title: "Day 1 — Introduction, print, comments, variables, data types",
+          content: `
+            <p>Welcome to Day 1! Today we'll learn the basics of Python including how to print output, use comments, declare variables, and understand basic data types.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li><strong>print()</strong> function for output</li>
+              <li>Comments using <code>#</code></li>
+              <li>Variables and assignment</li>
+              <li>Basic data types: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code></li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>print("Hello, World!")  # This prints a message
+age = 25
+height = 5.9
+name = "Rony"
+is_student = True
+print(name, "is", age, "years old.")</pre>
+            <h3>Practice Activity:</h3>
+            <p>Write a program that prints your name, age, and whether you are a student or not.</p>
+          `
+        },
+        2: {
+          title: "Day 2 — Input, type conversion, if/else",
+          content: `
+            <p>Today we'll learn how to take input from the user, convert data types, and use conditional statements.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li><strong>input()</strong> function</li>
+              <li>Type conversion with <code>int()</code>, <code>float()</code>, <code>str()</code></li>
+              <li>Conditional statements: <code>if</code>, <code>else</code>, <code>elif</code></li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+if age &gt;= 18:
+    print(name, "is an adult.")
+else:
+    print(name, "is a minor.")</pre>
+            <h3>Practice Activity:</h3>
+            <p>Create a program that asks for a number and tells if it is positive, negative, or zero.</p>
+          `
+        },
+        3: {
+          title: "Day 3 — Loops (for, while), range",
+          content: `
+            <p>Learn how to repeat actions using loops and the range function.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li><strong>for</strong> loops</li>
+              <li><strong>while</strong> loops</li>
+              <li><strong>range()</strong> function</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>for i in range(5):
+    print("Number", i)
+
+count = 0
+while count &lt; 5:
+    print("Count is", count)
+    count += 1</pre>
+            <h3>Practice Activity:</h3>
+            <p>Write a program that prints all even numbers from 2 to 20 using a for loop.</p>
+          `
+        },
+        4: {
+          title: "Day 4 — Patterns and tables",
+          content: `
+            <p>Practice printing patterns and multiplication tables using loops.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Nesting loops</li>
+              <li>Printing patterns with characters</li>
+              <li>Multiplication tables</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre># Print a triangle pattern
+for i in range(1, 6):
+    print("*" * i)
+
+# Multiplication table of 5
+for i in range(1, 11):
+    print("5 x", i, "=", 5*i)</pre>
+            <h3>Practice Activity:</h3>
+            <p>Write a program to print a square pattern of '#' with size 5x5.</p>
+          `
+        },
+        5: {
+          title: "Day 5 — Functions (def), parameters, return",
+          content: `
+            <p>Learn how to create reusable blocks of code using functions.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Defining functions with <code>def</code></li>
+              <li>Function parameters</li>
+              <li>Return values</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>def greet(name):
+    return "Hello, " + name + "!"
+
+message = greet("Rony")
+print(message)</pre>
+            <h3>Practice Activity:</h3>
+            <p>Create a function that takes two numbers and returns their sum.</p>
+          `
+        },
+        6: {
+          title: "Day 6 — Lists and tuples",
+          content: `
+            <p>Explore Python's list and tuple data structures for storing collections.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Lists: mutable ordered collections</li>
+              <li>Tuples: immutable ordered collections</li>
+              <li>Accessing and modifying elements</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>fruits = ["apple", "banana", "cherry"]
+fruits.append("date")
+print(fruits)
+
+coordinates = (10, 20)
+print(coordinates[0])</pre>
+            <h3>Practice Activity:</h3>
+            <p>Create a list of your favorite movies and print the second one.</p>
+          `
+        },
+        7: {
+          title: "Day 7 — Dictionaries and sets",
+          content: `
+            <p>Learn about dictionaries and sets for storing unique and key-value data.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Dictionaries: key-value pairs</li>
+              <li>Sets: unordered collections of unique items</li>
+              <li>Basic operations</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>person = {"name": "Rony", "age": 25}
+print(person["name"])
+
+unique_numbers = {1, 2, 3, 3, 2}
+print(unique_numbers)</pre>
+            <h3>Practice Activity:</h3>
+            <p>Create a dictionary with keys as subjects and values as your scores, then print your score for one subject.</p>
+          `
+        },
+        8: {
+          title: "Day 8 — File handling (read/write)",
+          content: `
+            <p>Understand how to read from and write to files in Python.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Opening files with <code>open()</code></li>
+              <li>Reading and writing text</li>
+              <li>Closing files</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre># Write to a file
+with open("example.txt", "w") as f:
+    f.write("Hello, file!")
+
+# Read from a file
+with open("example.txt", "r") as f:
+    content = f.read()
+    print(content)</pre>
+            <h3>Practice Activity:</h3>
+            <p>Create a program that writes your name to a file and then reads it back.</p>
+          `
+        },
+        9: {
+          title: "Day 9 — Modules and libraries",
+          content: `
+            <p>Learn to use Python modules and libraries to extend functionality.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>Importing modules</li>
+              <li>Using standard libraries</li>
+              <li>Installing external libraries (overview)</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>import math
+print(math.sqrt(16))
+
+from datetime import datetime
+print(datetime.now())</pre>
+            <h3>Practice Activity:</h3>
+            <p>Write a program that uses the <code>random</code> module to print a random number between 1 and 10.</p>
+          `
+        },
+        10: {
+          title: "Day 10 — Mini Project (Calculator)",
+          content: `
+            <p>Apply what you've learned to build a simple calculator.</p>
+            <h3>Concepts:</h3>
+            <ul>
+              <li>User input</li>
+              <li>Functions</li>
+              <li>Conditional logic</li>
+            </ul>
+            <h3>Code Examples:</h3>
+            <pre>def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+op = input("Choose operation (+ or -): ")
+
+if op == "+":
+    print("Result:", add(num1, num2))
+elif op == "-":
+    print("Result:", subtract(num1, num2))
+else:
+    print("Invalid operation")</pre>
+            <h3>Practice Activity:</h3>
+            <p>Extend this calculator to include multiplication and division operations.</p>
+          `
+        }
+      };
+
+      // Load progress from localStorage or initialize
+      let progress = JSON.parse(localStorage.getItem('pythonLessonProgress')) || {};
+
+      function updateUI() {
+        lessonCards.forEach(card => {
+          const day = parseInt(card.getAttribute('data-day'), 10);
+          const isCompleted = !!progress[day];
+          const prevDayCompleted = day === 1 || progress[day - 1];
+          if (isCompleted) {
+            card.classList.add('completed');
+            card.classList.remove('locked');
+          } else if (prevDayCompleted) {
+            card.classList.remove('locked');
+          } else {
+            card.classList.add('locked');
+          }
+        });
+      }
+
+      function saveProgress() {
+        localStorage.setItem('pythonLessonProgress', JSON.stringify(progress));
+      }
+
+      function openModal(day) {
+        if (!lessons[day]) return;
+        modalTitle.textContent = lessons[day].title;
+        modalContent.innerHTML = lessons[day].content;
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        modalOverlay.classList.add('active');
+        btnComplete.style.display = 'inline-block';
+        btnComplete.disabled = !!progress[day];
+        btnComplete.textContent = progress[day] ? 'Completed' : 'Mark as Complete';
+        btnComplete.dataset.day = day;
+        // Trap focus inside modal
+        modalOverlay.focus();
+      }
+
+      function closeModal() {
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        modalOverlay.classList.remove('active');
+        btnComplete.dataset.day = '';
+      }
+
+      function markComplete(day) {
+        if (!progress[day]) {
+          progress[day] = true;
+          // Unlock next day if exists
+          if (lessons[day + 1]) {
+            progress[day + 1] = progress[day + 1] || false;
+          }
+          saveProgress();
+          updateUI();
+          btnComplete.disabled = true;
+          btnComplete.textContent = 'Completed';
+        }
+      }
+
+      lessonCards.forEach(card => {
+        const day = parseInt(card.getAttribute('data-day'), 10);
+        card.addEventListener('click', () => {
+          if (card.classList.contains('locked')) return;
+          openModal(day);
+        });
+        card.addEventListener('keydown', (e) => {
+          if ((e.key === 'Enter' || e.key === ' ') && !card.classList.contains('locked')) {
+            e.preventDefault();
+            openModal(day);
+          }
+        });
+      });
+
+      btnComplete.addEventListener('click', () => {
+        const day = parseInt(btnComplete.dataset.day, 10);
+        if (!btnComplete.disabled) {
+          markComplete(day);
+        }
+      });
+
+      btnClose.addEventListener('click', closeModal);
+
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      updateUI();
+    })();
+  </script>
+</body>
+</html>
