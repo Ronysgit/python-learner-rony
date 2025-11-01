@@ -1,717 +1,401 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <!-- SEO and Open Graph Meta Tags -->
-  <meta name="title" content="Python Learner Rony — Learn Python in 100 Days">
-  <meta name="description" content="Join Python Learner Rony to master Python in 100 days with fun examples, daily challenges, and projects. Perfect for school students and beginners!">
-  <meta name="keywords" content="python tutorial, learn python, rony, coding for beginners, python course, 100 days python challenge, programming for students, python basics, python advanced, python learning website">
-  <meta name="author" content="Rony Nayak">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://ronysgit.github.io/python-learner-rony/">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Python Learner — By Rony Nayak</title>
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ronysgit.github.io/python-learner-rony/">
-  <meta property="og:title" content="Python Learner Rony — Learn Python in 100 Days">
-  <meta property="og:description" content="Master Python from basics to advanced in 100 days with Rony. Fun projects and simple lessons for school students!">
-  <meta property="og:image" content="https://ronysgit.github.io/python-learner-rony/preview.png">
+<!-- Monaco loader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://ronysgit.github.io/python-learner-rony/">
-  <meta property="twitter:title" content="Python Learner Rony — Learn Python in 100 Days">
-  <meta property="twitter:description" content="Join Rony's 100 Days Python Challenge — simple, fun, and free lessons for students.">
-  <meta property="twitter:image" content="https://ronysgit.github.io/python-learner-rony/preview.png">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Python Learner Rony</title>
-  <style>
-    :root{
-      --accent:#0b63b6;
-      --muted:#556070;
-      --bg:#f7fafc;
-      --card:#ffffff;
-      --radius:10px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:#0b1220}
-    header{background:var(--accent);color:white;padding:28px 16px;text-align:center}
-    header h1{margin:0;font-size:26px}
-    header p{margin:6px 0 0;font-size:14px;opacity:0.95}
-    .container{max-width:980px;margin:22px auto;padding:0 16px}
-    .hero{display:flex;flex-direction:column;gap:12px;align-items:flex-start;background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(11,18,32,0.06)}
-    .hero h2{margin:0;font-size:20px}
-    .hero p{margin:8px 0;color:var(--muted)}
-    .btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600;transition: background-color 0.3s ease;cursor:pointer;}
-    .btn:hover {
-      background-color: #094a8b;
-    }
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
-    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 14px rgba(11,18,32,0.05);transition: transform 0.3s ease;}
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(11,18,32,0.1);
-    }
-    .card h3{margin:0 0 8px;font-size:16px}
-    footer{margin-top:26px;padding:20px 16px;text-align:center;color:var(--muted);font-size:14px}
-    .small{font-size:13px;color:var(--muted)}
-    pre{background:#0b1220;color:#fff;padding:12px;border-radius:8px;overflow:auto}
-    /* responsive tweaks */
-    @media(min-width:720px){ .hero{flex-direction:row;justify-content:space-between;align-items:center} }
+<!-- Pyodide -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 
-    /* New section styles */
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .python-details {
-      background: linear-gradient(135deg, #0b63b6 0%, #3a8dd5 100%);
-      color: white;
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      margin: 28px 0;
-      box-shadow: 0 8px 24px rgba(11, 99, 182, 0.3);
-      animation: fadeInUp 1s ease forwards;
-    }
-    .python-details h2, .python-details h3 {
-      margin-top: 0;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    }
-    .python-details p {
-      line-height: 1.5;
-      margin-bottom: 16px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-    .challenge-plan {
-      background: linear-gradient(135deg, #3a8dd5 0%, #0b63b6 100%);
-      padding: 18px 16px;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(11, 99, 182, 0.4);
-      transition: background 0.4s ease;
-    }
-    .challenge-plan:hover {
-      background: linear-gradient(135deg, #0b63b6 0%, #3a8dd5 100%);
-    }
-    .reward-message {
-      margin-top: 16px;
-      font-weight: 700;
-      font-size: 18px;
-      color: #fff;
-      text-align: center;
-      padding: 12px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.4);
-      animation: fadeInUp 1.5s ease forwards;
-    }
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    /* Unlock system styles */
-    .lesson-card {
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 6px 14px rgba(11,18,32,0.05);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: background-color 0.4s ease, box-shadow 0.4s ease;
-      opacity: 1;
-      animation: fadeInUp 0.5s ease forwards;
-      min-height: 150px;
-      cursor: pointer;
-      position: relative;
-    }
-    .lesson-card.locked {
-      background: #e0e0e0;
-      color: #7a7a7a;
-      cursor: not-allowed;
-      box-shadow: none;
-      opacity: 0.7;
-    }
-    .lesson-card.completed {
-      background: #d4edda;
-      color: #155724;
-      box-shadow: 0 6px 18px rgba(21,87,36,0.3);
-    }
-    .lesson-card h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-    .lesson-content {
-      flex-grow: 1;
-      font-size: 14px;
-      margin-bottom: 12px;
-      color: inherit;
-    }
-    .btn-complete {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      align-self: flex-start;
-      display: none;
-    }
-    .btn-complete:hover:not(:disabled) {
-      background-color: #094a8b;
-    }
-    .btn-complete:disabled {
-      background-color: #7a7a7a;
-      cursor: not-allowed;
-    }
+<style>
+:root{
+  --bg:#0b0f14;
+  --panel:#0f1720;
+  --muted:#9fb;
+  --accent:#5865f2;
+  --card:#0e1620;
+  --mono: "JetBrains Mono", "Courier New", monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#e6eef8}
+.topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#071428;position:sticky;top:0;z-index:90}
+.brand{font-weight:700;font-size:18px}
+.container{display:flex;height:calc(100vh - 60px);overflow:hidden}
 
-    /* Modal styles */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 99, 182, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      animation: fadeInUp 0.3s ease forwards;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal {
-      background: white;
-      border-radius: var(--radius);
-      max-width: 700px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 8px 24px rgba(11, 99, 182, 0.4);
-      position: relative;
-      padding: 24px 32px 32px 32px;
-      animation: fadeInUp 0.4s ease forwards;
-    }
-    .modal h2 {
-      margin-top: 0;
-      color: var(--accent);
-    }
-    .modal pre {
-      background: #0b1220;
-      color: #fff;
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      margin-bottom: 16px;
-    }
-    .modal p {
-      line-height: 1.5;
-      margin-bottom: 16px;
-      color: #0b1220;
-    }
-    .modal ul {
-      margin-bottom: 16px;
-      padding-left: 20px;
-      color: #0b1220;
-    }
-    .modal button.close-modal {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      color: var(--accent);
-      cursor: pointer;
-      font-weight: 700;
-      line-height: 1;
-      transition: color 0.3s ease;
-    }
-    .modal button.close-modal:hover {
-      color: #094a8b;
-    }
-    .modal .btn-complete {
-      display: inline-block;
-      margin-top: 8px;
-    }
-  </style>
+/* Left sidebar */
+.sidebar{width:350px;flex:0 0 350px;background:linear-gradient(180deg,#071017,#0b0b0b);padding:18px;overflow:auto;border-right:2px solid rgba(88,101,242,0.14)}
+.sidebar h3{margin:6px 0;color:#cfe}
+.progress-wrap{margin:10px 0}
+.progress-bar{background:rgba(255,255,255,0.04);height:8px;border-radius:8px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);width:0%}
+.topic-list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.topic{padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;cursor:pointer}
+.topic.locked{opacity:0.5;cursor:not-allowed}
+.topic.active{background:rgba(88,101,242,0.18)}
+
+/* Middle lesson description */
+.lesson{width:33%;min-width:320px;padding:22px;overflow:auto;background:linear-gradient(180deg,#071017,#071017)}
+.lesson .title{font-size:20px;font-weight:700;margin-bottom:8px}
+.lesson .body{color:#dfeefb;line-height:1.6}
+.lesson .example{background:#0b1220;padding:12px;border-radius:8px;margin-top:12px;font-family:var(--mono);white-space:pre-wrap;color:#dfeefb}
+.lesson .nav{display:flex;justify-content:space-between;margin-top:14px;gap:8px}
+.btn{background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+/* Right: editor + output */
+.editor-panel{flex:1;display:flex;flex-direction:column;border-left:2px solid rgba(88,101,242,0.12);background:var(--panel)}
+.editor-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.editor-actions{display:flex;gap:10px;align-items:center}
+select.lang{background:#0b0b0b;color:#fff;border:1px solid #222;padding:8px;border-radius:6px}
+#runBtn{background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+#editor{height:calc(100vh - 260px);width:100%}
+.output-tabs{display:flex;border-top:1px solid rgba(255,255,255,0.03);background:#0b0b0b}
+.tab{padding:12px 16px;cursor:pointer;border-right:1px solid rgba(255,255,255,0.02)}
+.tab.active{background:#0d1116}
+.output{height:240px;background:#000;padding:12px;overflow:auto;font-family:var(--mono);color:#cfe;border-top:2px solid rgba(88,101,242,0.12)}
+
+/* input bar (terminal style) */
+.input-bar{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(255,255,255,0.03);background:#070707}
+.input-field{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#0b0b0b;color:#fff;font-family:var(--mono)}
+
+/* responsive */
+@media(max-width:1000px){
+  .container{flex-direction:column}
+  .sidebar{width:100%;flex:0 0 auto;border-right:none;border-bottom:2px solid rgba(88,101,242,0.08)}
+  .lesson{width:100%;order:2}
+  .editor-panel{order:3;height:55vh}
+  #editor{height:calc(55vh - 150px)}
+  .output{height:18vh}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Python Learner Rony</h1>
-    <p>Learn Python from basics to advanced — simple lessons by Rony</p>
-  </header>
-
-  <!-- New Python Programming Details and Challenge Section -->
-  <section class="container python-details" aria-label="Python programming details and 100 days challenge">
-    <h2>Deep Dive into Python Programming</h2>
-    <p>Python is a powerful, versatile, and beginner-friendly programming language widely used in web development, data science, automation, artificial intelligence, and more. Its simple syntax and vast ecosystem make it an excellent choice for learners and professionals alike.</p>
-    <p>Understanding Python thoroughly opens doors to numerous career opportunities and empowers you to solve real-world problems efficiently.</p>
-    
-    <section class="challenge-plan" aria-label="100 Days Python Challenge Plan">
-      <h3>100 Days Python Challenge</h3>
-      <p>Embark on a structured 100-day journey to master Python. Each day focuses on a specific concept, from basics like variables and loops to advanced topics such as decorators and web scraping.</p>
-      <ul>
-        <li>Day 1-10: Python Fundamentals (syntax, data types, control flow)</li>
-        <li>Day 11-30: Functions, Modules, and File Handling</li>
-        <li>Day 31-50: Object-Oriented Programming and Error Handling</li>
-        <li>Day 51-70: Working with Libraries (requests, pandas, matplotlib)</li>
-        <li>Day 71-90: Web Development Basics and APIs</li>
-        <li>Day 91-100: Projects and Deployment</li>
-      </ul>
-      <p>Consistency is key! Follow this challenge to build confidence and practical skills.</p>
-    </section>
-
-    <div class="reward-message" aria-live="polite">
-      🎉 Congratulations! Completing this challenge will unlock your potential as a skilled Python programmer. Keep coding and enjoy the journey!
+  <div class="topbar">
+    <div class="brand">Python Learner — By Rony Nayak</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn ghost" id="coursesBtn">Courses</button>
+      <button class="btn ghost" id="practiceBtn">Practice</button>
+      <button class="btn ghost" id="signinBtn">Sign in</button>
     </div>
-  </section>
-  <!-- End of New Python Programming Details and Challenge Section -->
+  </div>
 
-  <main class="container">
-    <section class="hero" aria-label="hero">
-      <div>
-        <h2>Welcome — first steps to become a Python coder</h2>
-        <p>Free lessons for 9th to +2 students. Hands-on examples, small projects, and friendly practice.</p>
-        <p style="margin-top:8px">
-          <a class="btn" href="#lessons">See Lesson Plan</a>
-        </p>
+  <div class="container">
+    <div class="sidebar" id="sidebar">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Complete Python — From Basics to Advanced</div>
+        <div style="text-align:right;color:#9fb">Progress: <span id="progPct">0%</span></div>
       </div>
-      <div class="small">
-        <strong>Contact:</strong> ronynayak111@gmail.com<br/>
-        <span class="small">Want the site live? I can deploy it to GitHub Pages / Netlify for free.</span>
-      </div>
-    </section>
 
-    <section id="lessons" style="margin-top:18px">
-      <h2 style="margin:0 0 10px">Quick Course Overview</h2>
-      <div class="grid" id="lessonGrid">
-        <div class="lesson-card" data-day="1" aria-label="Day 1 lesson" tabindex="0">
-          <h3>Day 1 — Introduction, print, comments, variables, data types</h3>
-          <p class="lesson-content">print(), comments, variables, basic data types</p>
-        </div>
-        <div class="lesson-card locked" data-day="2" aria-label="Day 2 lesson" tabindex="0">
-          <h3>Day 2 — Input, type conversion, if/else</h3>
-          <p class="lesson-content">input(), type conversion, conditional statements</p>
-        </div>
-        <div class="lesson-card locked" data-day="3" aria-label="Day 3 lesson" tabindex="0">
-          <h3>Day 3 — Loops (for, while), range</h3>
-          <p class="lesson-content">for and while loops, range()</p>
-        </div>
-        <div class="lesson-card locked" data-day="4" aria-label="Day 4 lesson" tabindex="0">
-          <h3>Day 4 — Patterns and tables</h3>
-          <p class="lesson-content">Printing patterns and multiplication tables</p>
-        </div>
-        <div class="lesson-card locked" data-day="5" aria-label="Day 5 lesson" tabindex="0">
-          <h3>Day 5 — Functions (def), parameters, return</h3>
-          <p class="lesson-content">Defining functions, parameters, return values</p>
-        </div>
-        <div class="lesson-card locked" data-day="6" aria-label="Day 6 lesson" tabindex="0">
-          <h3>Day 6 — Lists and tuples</h3>
-          <p class="lesson-content">Working with lists and tuples</p>
-        </div>
-        <div class="lesson-card locked" data-day="7" aria-label="Day 7 lesson" tabindex="0">
-          <h3>Day 7 — Dictionaries and sets</h3>
-          <p class="lesson-content">Dictionaries and sets basics</p>
-        </div>
-        <div class="lesson-card locked" data-day="8" aria-label="Day 8 lesson" tabindex="0">
-          <h3>Day 8 — File handling (read/write)</h3>
-          <p class="lesson-content">Reading and writing files</p>
-        </div>
-        <div class="lesson-card locked" data-day="9" aria-label="Day 9 lesson" tabindex="0">
-          <h3>Day 9 — Modules and libraries</h3>
-          <p class="lesson-content">Using modules and libraries</p>
-        </div>
-        <div class="lesson-card locked" data-day="10" aria-label="Day 10 lesson" tabindex="0">
-          <h3>Day 10 — Mini Project (Calculator)</h3>
-          <p class="lesson-content">Build a simple calculator project</p>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      </div>
+
+      <div style="font-weight:700;margin-top:6px;color:#cfe">Topics</div>
+      <div class="topic-list" id="topicList"></div>
+
+      <div style="margin-top:18px">
+        <div style="font-weight:700;color:#cfe">Course Info</div>
+        <div style="background:var(--card);padding:12px;border-radius:8px;margin-top:8px">
+          <div style="font-weight:700">Duration</div>
+          <div style="color:#cfe">40–70 hours (self paced)</div>
+          <hr style="opacity:0.06;margin:8px 0">
+          <div style="font-weight:700">Goal</div>
+          <div style="color:#cfe">Learn Python basics to advanced with interactive examples</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section style="margin-top:18px">
-      <h2 style="margin:0 0 10px">Example — Small Python snippet</h2>
-      <div class="card">
-        <p class="small">This is for showing students how input and if-else work (explain this in class):</p>
-        <pre>name = input("Enter your name: ")
-marks = int(input("Enter your marks: "))
-if marks &gt;= 90:
-    print("Excellent,", name)
-elif marks &gt;= 60:
-    print("Good,", name)
-elif marks &gt;= 35:
-    print("Pass,", name)
-else:
-    print("Fail,", name)</pre>
+    <div class="lesson" id="lesson">
+      <div class="title" id="lessonTitle">Welcome to Python</div>
+      <div class="body" id="lessonBody">
+        <p>Choose a topic from the left to begin. Each lesson has explanation, example and an editable practice code on the right.</p>
       </div>
-    </section>
+      <div class="example" id="lessonExample"># Examples will appear here</div>
 
-    <section style="margin-top:18px">
-      <h2 style="margin:0 0 10px">Next steps (deployment)</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Option A — GitHub Pages</h3>
-          <p class="small">Free, works with static HTML. Good if you want a student-friendly learning site and control.</p>
-        </div>
-        <div class="card">
-          <h3>Option B — Netlify</h3>
-          <p class="small">Easy drag & drop deploy or connect to GitHub for auto updates. Free tier available.</p>
+      <div class="nav" style="margin-top:18px">
+        <button class="btn ghost" id="prevLesson">Previous</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" id="hintBtn" style="display:none">Hint</button>
+          <button class="btn" id="nextLesson">Next</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <footer>
-      Made with ♥ by Rony — <span class="small">Want changes? Tell me and I'll edit the site (colors, text, add pages).</span>
-    </footer>
-  </main>
+    <div class="editor-panel">
+      <div class="editor-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <select class="lang" id="langSelect"><option value="python">Python</option></select>
+          <button class="btn ghost" id="resetBtn">Reset</button>
+        </div>
 
-  <!-- Modals for each lesson day -->
-  <div id="modal-container">
-    <div class="modal-overlay" id="modal-overlay" aria-hidden="true" tabindex="-1">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button class="close-modal" aria-label="Close modal">&times;</button>
-        <h2 id="modal-title"></h2>
-        <div id="modal-content"></div>
-        <button class="btn-complete">Mark as Complete</button>
+        <div class="editor-actions">
+          <button id="runBtn">▶ Run</button>
+        </div>
+      </div>
+
+      <div id="editor"></div>
+
+      <div class="output-tabs">
+        <div class="tab active" data-tab="output">Output</div>
+      </div>
+
+      <div class="output" id="output">Console output will appear here...</div>
+
+      <div class="input-bar" id="inputBar" style="display:none">
+        <input id="inputField" class="input-field" placeholder="Type input and press Enter" />
+        <button class="btn" id="inputSend">Enter</button>
       </div>
     </div>
   </div>
 
-  <script>
-    (function() {
-      const lessonCards = document.querySelectorAll('.lesson-card');
-      const modalOverlay = document.getElementById('modal-overlay');
-      const modalTitle = document.getElementById('modal-title');
-      const modalContent = document.getElementById('modal-content');
-      const btnComplete = modalOverlay.querySelector('.btn-complete');
-      const btnClose = modalOverlay.querySelector('.close-modal');
+<!-- Script: initialize Monaco + Pyodide + UI -->
+<script>
+/* ---------- Lessons content (complete syllabus simplified) ---------- */
+const LESSONS = [
+  {id:1, title:'Introduction to Python', body:`Python is a high-level, interpreted language used for web development, data science, automation and more. This course will teach you from basics to advanced.`, example:`# Hello World\nprint("Hello, world!")`, hint:'Run the example.'},
+  {id:2, title:'Variables & Data Types', body:`Variables store values. Common types: int, float, str, bool.`, example:`x = 10\npi = 3.14\nname = "Rony"\nprint(type(x), type(pi), type(name))`, hint:'Use type() to inspect types.'},
+  {id:3, title:'Input & Type Conversion', body:`input() reads text from user. Convert using int(), float().`, example:`age = int(input("Enter your age: "))\nprint("Next year:", age+1)`, hint:'Wrap in try/except for safety.'},
+  {id:4, title:'Operators & Expressions', body:`Arithmetic: + - * / // % ; comparison: == != > < ; logical: and/or/not`, example:`a=7; b=3\nprint(a/b, a//b, a%b)`, hint:'Use parentheses to force order.'},
+  {id:5, title:'Strings & Methods', body:`Strings are sequences. Use methods like .upper(), .lower(), .split(), .replace()`, example:`s = "hello Rony"\nprint(s.upper())\nprint(s.split())`, hint:'Try f-strings for formatting.'},
+  {id:6, title:'If, Elif & Else', body:`Conditional logic controls program flow. Indentation is significant in Python.`, example:`n = int(input("n: "))\nif n>0:\n  print("Positive")\nelif n==0:\n  print("Zero")\nelse:\n  print("Negative")`, hint:'Indentation matters.'},
+  {id:7, title:'For Loops & range()', body:`for loops iterate over sequences. range(start,stop,step).`, example:`for i in range(1,6):\n  print(i)`, hint:'range(5) -> 0..4.'},
+  {id:8, title:'While Loops & Loop Control', body:`while loops repeat until condition false. Use break/continue.` , example:`i=0\nwhile i<5:\n  print(i)\n  i+=1`, hint:'Avoid infinite loops.'},
+  {id:9, title:'Functions', body:`Functions are defined using def. Use parameters and return values.`, example:`def add(a,b):\n  return a+b\nprint(add(2,3))`, hint:'Keep functions focused.'},
+  {id:10, title:'Lists', body:`Lists are ordered, mutable sequences. Use append, pop, slicing.`, example:`lst=[1,2,3]\nlst.append(4)\nprint(lst[1:3])`, hint:'Use list comprehensions.'},
+  {id:11, title:'Tuples', body:`Tuples are immutable sequences.` , example:`t=(1,2,3)\n# t[0]=5 -> error`, hint:'Good for fixed data.'},
+  {id:12, title:'Dictionaries', body:`Key-value store. Use d[key] or d.get(key).`, example:`d={'a':1,'b':2}\nfor k,v in d.items():\n  print(k,v)`, hint:'Use get() to avoid KeyError.'},
+  {id:13, title:'Sets', body:`Unordered unique elements. Good for deduplication.`, example:`s=set([1,2,2,3])\nprint(s)`, hint:'Fast membership tests.'},
+  {id:14, title:'Comprehensions', body:`Short ways to build lists/sets/dicts.`, example:`squares=[x*x for x in range(6)]\nprint(squares)`, hint:'Combine with if conditions.'},
+  {id:15, title:'File Handling', body:`Use open(), read(), write() and with statement.`, example:`with open('data.txt','w') as f:\n  f.write('hello')`, hint:'Use with to auto-close files.'},
+  {id:16, title:'Exceptions', body:`Handle errors using try/except/finally.`, example:`try:\n  x=int(input())\nexcept ValueError:\n  print('Invalid')`, hint:'Catch specific exceptions.'},
+  {id:17, title:'Modules & Packages', body:`Organize code into modules. Use import.`, example:`import math\nprint(math.sqrt(16))`, hint:'Use virtualenv for projects.'},
+  {id:18, title:'Standard Library', body:`Explore os, sys, json, datetime, random.`, example:`import json\nprint(json.dumps({'a':1}))`, hint:'Read docs.'},
+  {id:19, title:'OOP Basics', body:`Classes, objects, __init__, self.`, example:`class Person:\n  def __init__(self,name):\n    self.name=name\np=Person('Rony')\nprint(p.name)`, hint:'Prefer composition.'},
+  {id:20, title:'Advanced OOP', body:`Magic methods, dataclasses.`, example:`from dataclasses import dataclass\n@dataclass\nclass P:\n  name:str\n  age:int`, hint:'Dataclasses reduce boilerplate.'},
+  {id:21, title:'Iterators & Generators', body:`Use yield to create generators.`, example:`def gen(n):\n  for i in range(n):\n    yield i`, hint:'Memory efficient.'},
+  {id:22, title:'Decorators', body:`Wrap functions to add behavior.`, example:`def debug(f):\n  def inner(*a,**k):\n    print('call',f.__name__)\n    return f(*a,**k)\n  return inner`, hint:'Common in frameworks.'},
+  {id:23, title:'Lambda & Functional', body:`lambda, map, filter, functools.reduce.`, example:`s=list(map(lambda x:x*2,[1,2,3]))\nprint(s)`, hint:'Use for small functions.'},
+  {id:24, title:'Testing', body:`Use unittest/pytest; write asserts.`, example:`assert 1+1==2`, hint:'Test edge cases.'},
+  {id:25, title:'Working with APIs', body:`Use requests to call APIs (install packages).`, example:`# pip install requests\nimport requests\nr=requests.get('https://api.github.com')\nprint(r.status_code)`, hint:'Handle network errors.'},
+  {id:26, title:'Web Basics (Flask)', body:`Intro to building simple web apps using Flask.`, example:`# flask app placeholder`, hint:'Deploy on Heroku / Vercel.'},
+  {id:27, title:'Data Basics', body:`Intro to numpy/pandas (overview).`, example:`# overview placeholder`, hint:'Learn more for data science.'},
+  {id:28, title:'Mini Projects', body:`Ideas: Calculator, Todo, Guessing game, Scraper.`, example:`# project placeholder`, hint:'Build and publish projects.'},
+  {id:29, title:'Debugging & Logging', body:`Use logging module and pdb for debugging.`, example:`import logging\nlogging.info('msg')`, hint:'Logs help in production.'},
+  {id:30, title:'Final Steps & Next Learning', body:`Tips to continue: build projects, read docs, contribute to open-source.`, example:`# final note`, hint:'Keep practicing.'},
+];
 
-      // Lesson details data
-      const lessons = {
-        1: {
-          title: "Day 1 — Introduction, print, comments, variables, data types",
-          content: `
-            <p>Welcome to Day 1! Today we'll learn the basics of Python including how to print output, use comments, declare variables, and understand basic data types.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li><strong>print()</strong> function for output</li>
-              <li>Comments using <code>#</code></li>
-              <li>Variables and assignment</li>
-              <li>Basic data types: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code></li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>print("Hello, World!")  # This prints a message
-age = 25
-height = 5.9
-name = "Rony"
-is_student = True
-print(name, "is", age, "years old.")</pre>
-            <h3>Practice Activity:</h3>
-            <p>Write a program that prints your name, age, and whether you are a student or not.</p>
-          `
-        },
-        2: {
-          title: "Day 2 — Input, type conversion, if/else",
-          content: `
-            <p>Today we'll learn how to take input from the user, convert data types, and use conditional statements.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li><strong>input()</strong> function</li>
-              <li>Type conversion with <code>int()</code>, <code>float()</code>, <code>str()</code></li>
-              <li>Conditional statements: <code>if</code>, <code>else</code>, <code>elif</code></li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>name = input("Enter your name: ")
-age = int(input("Enter your age: "))
-if age &gt;= 18:
-    print(name, "is an adult.")
-else:
-    print(name, "is a minor.")</pre>
-            <h3>Practice Activity:</h3>
-            <p>Create a program that asks for a number and tells if it is positive, negative, or zero.</p>
-          `
-        },
-        3: {
-          title: "Day 3 — Loops (for, while), range",
-          content: `
-            <p>Learn how to repeat actions using loops and the range function.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li><strong>for</strong> loops</li>
-              <li><strong>while</strong> loops</li>
-              <li><strong>range()</strong> function</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>for i in range(5):
-    print("Number", i)
+/* ---------- UI init ---------- */
+const topicListEl = document.getElementById('topicList');
+const lessonTitleEl = document.getElementById('lessonTitle');
+const lessonBodyEl = document.getElementById('lessonBody');
+const lessonExampleEl = document.getElementById('lessonExample');
+const progFill = document.getElementById('progFill');
+const progPct = document.getElementById('progPct');
+const nextBtn = document.getElementById('nextLesson');
+const prevBtn = document.getElementById('prevLesson');
+const hintBtn = document.getElementById('hintBtn');
+const resetBtn = document.getElementById('resetBtn');
 
-count = 0
-while count &lt; 5:
-    print("Count is", count)
-    count += 1</pre>
-            <h3>Practice Activity:</h3>
-            <p>Write a program that prints all even numbers from 2 to 20 using a for loop.</p>
-          `
-        },
-        4: {
-          title: "Day 4 — Patterns and tables",
-          content: `
-            <p>Practice printing patterns and multiplication tables using loops.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Nesting loops</li>
-              <li>Printing patterns with characters</li>
-              <li>Multiplication tables</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre># Print a triangle pattern
-for i in range(1, 6):
-    print("*" * i)
+let progress = JSON.parse(localStorage.getItem('plr_progress')||'{}');
+let currentLesson = Number(localStorage.getItem('plr_current')||1);
 
-# Multiplication table of 5
-for i in range(1, 11):
-    print("5 x", i, "=", 5*i)</pre>
-            <h3>Practice Activity:</h3>
-            <p>Write a program to print a square pattern of '#' with size 5x5.</p>
-          `
-        },
-        5: {
-          title: "Day 5 — Functions (def), parameters, return",
-          content: `
-            <p>Learn how to create reusable blocks of code using functions.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Defining functions with <code>def</code></li>
-              <li>Function parameters</li>
-              <li>Return values</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>def greet(name):
-    return "Hello, " + name + "!"
+function isUnlocked(id){ if(id===1) return true; return !!progress[id-1]; }
 
-message = greet("Rony")
-print(message)</pre>
-            <h3>Practice Activity:</h3>
-            <p>Create a function that takes two numbers and returns their sum.</p>
-          `
-        },
-        6: {
-          title: "Day 6 — Lists and tuples",
-          content: `
-            <p>Explore Python's list and tuple data structures for storing collections.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Lists: mutable ordered collections</li>
-              <li>Tuples: immutable ordered collections</li>
-              <li>Accessing and modifying elements</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>fruits = ["apple", "banana", "cherry"]
-fruits.append("date")
-print(fruits)
+function renderTopics(){
+  topicListEl.innerHTML='';
+  LESSONS.forEach(l=>{
+    const div = document.createElement('div');
+    div.className='topic';
+    if(!isUnlocked(l.id)) div.classList.add('locked');
+    if(l.id===currentLesson) div.classList.add('active');
+    div.innerText = l.id + '. ' + l.title;
+    div.onclick = ()=>{ if(isUnlocked(l.id)){ openLesson(l.id);} else { alert('Complete previous lessons to unlock this.'); } };
+    topicListEl.appendChild(div);
+  });
+}
 
-coordinates = (10, 20)
-print(coordinates[0])</pre>
-            <h3>Practice Activity:</h3>
-            <p>Create a list of your favorite movies and print the second one.</p>
-          `
-        },
-        7: {
-          title: "Day 7 — Dictionaries and sets",
-          content: `
-            <p>Learn about dictionaries and sets for storing unique and key-value data.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Dictionaries: key-value pairs</li>
-              <li>Sets: unordered collections of unique items</li>
-              <li>Basic operations</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>person = {"name": "Rony", "age": 25}
-print(person["name"])
+function updateProgressUI(){
+  const done = Object.keys(progress).length;
+  const total = LESSONS.length;
+  const pct = Math.round(done/total*100);
+  progFill.style.width = pct+'%';
+  progPct.innerText = pct + '%';
+}
 
-unique_numbers = {1, 2, 3, 3, 2}
-print(unique_numbers)</pre>
-            <h3>Practice Activity:</h3>
-            <p>Create a dictionary with keys as subjects and values as your scores, then print your score for one subject.</p>
-          `
-        },
-        8: {
-          title: "Day 8 — File handling (read/write)",
-          content: `
-            <p>Understand how to read from and write to files in Python.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Opening files with <code>open()</code></li>
-              <li>Reading and writing text</li>
-              <li>Closing files</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre># Write to a file
-with open("example.txt", "w") as f:
-    f.write("Hello, file!")
+function openLesson(id){
+  currentLesson = id;
+  localStorage.setItem('plr_current', currentLesson);
+  const l = LESSONS.find(x=>x.id===id);
+  lessonTitleEl.innerText = l.title;
+  lessonBodyEl.innerHTML = '<p>'+String(l.body).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')+'</p>';
+  lessonExampleEl.innerText = l.example||'';
+  hintBtn.style.display = l.hint ? 'inline-block' : 'none';
+  if(l.example && l.example.trim()){ if(window.editor) editor.setValue(l.example); localStorage.setItem('plr_code', editor && editor.getValue ? editor.getValue() : ''); }
+  renderTopics();
+  updateProgressUI();
+}
 
-# Read from a file
-with open("example.txt", "r") as f:
-    content = f.read()
-    print(content)</pre>
-            <h3>Practice Activity:</h3>
-            <p>Create a program that writes your name to a file and then reads it back.</p>
-          `
-        },
-        9: {
-          title: "Day 9 — Modules and libraries",
-          content: `
-            <p>Learn to use Python modules and libraries to extend functionality.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>Importing modules</li>
-              <li>Using standard libraries</li>
-              <li>Installing external libraries (overview)</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>import math
-print(math.sqrt(16))
+prevBtn.onclick = ()=>{ if(currentLesson>1) openLesson(currentLesson-1); };
+nextBtn.onclick = ()=>{
+  progress[currentLesson]=true;
+  localStorage.setItem('plr_progress', JSON.stringify(progress));
+  if(currentLesson<LESSONS.length) openLesson(currentLesson+1);
+  renderTopics();
+  updateProgressUI();
+};
+hintBtn.onclick = ()=>{ const l = LESSONS.find(x=>x.id===currentLesson); if(l && l.hint) alert('Hint:\n'+l.hint); };
 
-from datetime import datetime
-print(datetime.now())</pre>
-            <h3>Practice Activity:</h3>
-            <p>Write a program that uses the <code>random</code> module to print a random number between 1 and 10.</p>
-          `
-        },
-        10: {
-          title: "Day 10 — Mini Project (Calculator)",
-          content: `
-            <p>Apply what you've learned to build a simple calculator.</p>
-            <h3>Concepts:</h3>
-            <ul>
-              <li>User input</li>
-              <li>Functions</li>
-              <li>Conditional logic</li>
-            </ul>
-            <h3>Code Examples:</h3>
-            <pre>def add(x, y):
-    return x + y
+renderTopics();
 
-def subtract(x, y):
-    return x - y
+/* ---------- Monaco editor init ---------- */
+let editor;
+require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' }});
+require(['vs/editor/editor.main'], function () {
+  editor = monaco.editor.create(document.getElementById('editor'), {
+    value: '# Write Python code here\\nprint(\"Hello from Python Learner\")',
+    language: 'python',
+    theme: 'vs-dark',
+    automaticLayout: true,
+    minimap: { enabled: false },
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: 14,
+    tabSize: 4,
+    insertSpaces: true,
+  });
 
-num1 = float(input("Enter first number: "))
-num2 = float(input("Enter second number: "))
-op = input("Choose operation (+ or -): ")
+  // load last saved code
+  const saved = localStorage.getItem('plr_code');
+  if(saved) editor.setValue(saved);
+  editor.onDidChangeModelContent(()=> localStorage.setItem('plr_code', editor.getValue()));
 
-if op == "+":
-    print("Result:", add(num1, num2))
-elif op == "-":
-    print("Result:", subtract(num1, num2))
-else:
-    print("Invalid operation")</pre>
-            <h3>Practice Activity:</h3>
-            <p>Extend this calculator to include multiplication and division operations.</p>
-          `
-        }
-      };
+  // open the saved/current lesson
+  openLesson(currentLesson);
+});
 
-      // Load progress from localStorage or initialize
-      let progress = JSON.parse(localStorage.getItem('pythonLessonProgress')) || {};
+/* ---------- Pyodide setup (real Python) ---------- */
 
-      function updateUI() {
-        lessonCards.forEach(card => {
-          const day = parseInt(card.getAttribute('data-day'), 10);
-          const isCompleted = !!progress[day];
-          const prevDayCompleted = day === 1 || progress[day - 1];
-          if (isCompleted) {
-            card.classList.add('completed');
-            card.classList.remove('locked');
-          } else if (prevDayCompleted) {
-            card.classList.remove('locked');
-          } else {
-            card.classList.add('locked');
-          }
-        });
-      }
+let pyodide = null;
+let pyodideReady = false;
+let inputQueue = [];
+let waitingForInput = false;
 
-      function saveProgress() {
-        localStorage.setItem('pythonLessonProgress', JSON.stringify(progress));
-      }
+async function initPyodide(){
+  const outputEl = document.getElementById('output');
+  outputEl.innerText = '⏳ Loading Python interpreter...';
+  pyodide = await loadPyodide({indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/"});
+  // define JS synchronous input function accessible from Python via js._get_input
+  window._pyodide_get_input = function(promptText){
+    // try to use input queue first
+    if(inputQueue.length>0){
+      return inputQueue.shift();
+    }
+    // fallback to synchronous browser prompt (no async blocking UI here)
+    // Using prompt to keep input synchronous so Python's input() works seamlessly
+    const val = window.prompt(promptText ?? '');
+    return val === null ? '' : val;
+  };
 
-      function openModal(day) {
-        if (!lessons[day]) return;
-        modalTitle.textContent = lessons[day].title;
-        modalContent.innerHTML = lessons[day].content;
-        modalOverlay.setAttribute('aria-hidden', 'false');
-        modalOverlay.classList.add('active');
-        btnComplete.style.display = 'inline-block';
-        btnComplete.disabled = !!progress[day];
-        btnComplete.textContent = progress[day] ? 'Completed' : 'Mark as Complete';
-        btnComplete.dataset.day = day;
-        // Trap focus inside modal
-        modalOverlay.focus();
-      }
+  // in Python, we will override builtins.input to call js._pyodide_get_input
+  const bootstrapInput = `
+import builtins, js
+def __pyodide_input(prompt=''):
+    try:
+        return js._pyodide_get_input(str(prompt))
+    except:
+        return ''
+builtins.input = __pyodide_input
+`;
+  await pyodide.runPythonAsync(bootstrapInput);
+  pyodideReady = true;
+  outputEl.innerText = '✅ Python ready!';
+}
+initPyodide();
 
-      function closeModal() {
-        modalOverlay.setAttribute('aria-hidden', 'true');
-        modalOverlay.classList.remove('active');
-        btnComplete.dataset.day = '';
-      }
+/* ---------- Run button logic ---------- */
+document.getElementById('runBtn').addEventListener('click', async ()=>{
+  const outputEl = document.getElementById('output');
 
-      function markComplete(day) {
-        if (!progress[day]) {
-          progress[day] = true;
-          // Unlock next day if exists
-          if (lessons[day + 1]) {
-            progress[day + 1] = progress[day + 1] || false;
-          }
-          saveProgress();
-          updateUI();
-          btnComplete.disabled = true;
-          btnComplete.textContent = 'Completed';
-        }
-      }
+  if(!pyodideReady){
+    outputEl.innerText = '⏳ Python is still loading...';
+    return;
+  }
 
-      lessonCards.forEach(card => {
-        const day = parseInt(card.getAttribute('data-day'), 10);
-        card.addEventListener('click', () => {
-          if (card.classList.contains('locked')) return;
-          openModal(day);
-        });
-        card.addEventListener('keydown', (e) => {
-          if ((e.key === 'Enter' || e.key === ' ') && !card.classList.contains('locked')) {
-            e.preventDefault();
-            openModal(day);
-          }
-        });
-      });
+  outputEl.innerText = '';  // clear output
 
-      btnComplete.addEventListener('click', () => {
-        const day = parseInt(btnComplete.dataset.day, 10);
-        if (!btnComplete.disabled) {
-          markComplete(day);
-        }
-      });
+  const code = editor.getValue();
 
-      btnClose.addEventListener('click', closeModal);
+  try {
+    const wrapper = `
+import sys, io
+buffer = io.StringIO()
+sys_stdout = sys.stdout
+sys_stderr = sys.stderr
+sys.stdout = buffer
+sys.stderr = buffer
+try:
+${code.split('\n').map(line=>'    '+line).join('\n')}
+finally:
+    sys.stdout = sys_stdout
+    sys.stderr = sys_stderr
 
-      modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
-          closeModal();
-        }
-      });
+buffer.getvalue()
+`;
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-          closeModal();
-        }
-      });
+    let result = await pyodide.runPythonAsync(wrapper);
 
-      updateUI();
-    })();
-  </script>
+    if (result === undefined || result === null) {
+      result = buffer.getvalue() if 'buffer' in locals() else "";
+    }
+
+    outputEl.innerText = String(result).trim();
+
+  } catch(err){
+    outputEl.innerText = '❌ Error:\n' + String(err);
+  }
+});
+
+/* ---------- Input support via inputBar (optional queue) ---------- */
+const inputBar = document.getElementById('inputBar');
+const inputField = document.getElementById('inputField');
+const inputSend = document.getElementById('inputSend');
+
+inputSend.addEventListener('click', ()=>{
+  const v = inputField.value || '';
+  inputQueue.push(v);
+  inputField.value = '';
+  inputBar.style.display = 'none';
+});
+
+// If a prompt is needed and we were to use an in-page input, user can click to open
+// but current default uses browser prompt to keep synchronous compatibility
+
+/* ---------- Reset button ---------- */
+resetBtn.addEventListener('click', ()=>{
+  const l = LESSONS.find(x=>x.id===currentLesson);
+  if(l && l.example) editor.setValue(l.example);
+});
+
+/* ---------- Small helpers ---------- */
+window.PLR = {
+  resetProgress: () => {
+    if(confirm('Reset progress?')){
+      progress = {};
+      localStorage.removeItem('plr_progress');
+      localStorage.removeItem('plr_current');
+      location.reload();
+    }
+  }
+};
+
+/* ---------- Ensure layout and initial load ---------- */
+window.addEventListener('resize', ()=>{ if(editor) editor.layout(); });
+</script>
 </body>
 </html>
-Updated site with SEO + Lessons unlock system
